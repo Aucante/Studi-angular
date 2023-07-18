@@ -1,4 +1,3 @@
-
 FROM node:latest as build
 
 WORKDIR /usr/local/app
