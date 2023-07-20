@@ -1,15 +1,14 @@
 stages:
-  - build
-  
-build:
-  stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:v1.9.0-debug
-    entrypoint: [""]
+  - test
+
+test:
+  stage: test
+  image: zenika/alpine-chrome:100-with-node-16
   script:
-    - mkdir -p /kaniko/.docker
-    - echo $SECRET_DOCKER > /kaniko/.docker/config.json
-    - /kaniko/executor
-      --context "${CI_PROJECT_DIR}"
-      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --destination "aucante/angular-nginx:latest"
+    - npm install -g @angular/cli
+    - npm install --include=dev
+    - ng analytics disable
+    - ng test --browsers=ChromeHeadless --watch=false
+  
+
+
