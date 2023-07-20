@@ -25,4 +25,9 @@
   docker run -it -p 81:80 studi-angular-front
 ```
 
+#### Update Kubeconfig
+```bash
+  update-kube-config
+```
+
 The application is available on http://localhost:81.
