@@ -20,4 +20,4 @@ deploy:
     - chmod +x kubectl
     - make update-kube-config
     - ./kubectl apply -f k8s/deployment.yaml
-    - ./kubectl rollout restart deploy/service-node
+    - ./kubectl rollout restart deploy/service-angular
