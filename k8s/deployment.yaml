@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-angular
+  labels:
+    app: service-angular
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-angular
+  template:
+    metadata:
+      name: service-angular
+      labels:
+        app: service-angular
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: service-angular
+          image: aucante/angular-nginx:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-angular
+spec:
+  selector:
+    app: service-angular
+  ports:
+    - protocol: TCP
+      port: 80
+  type: ClusterIP

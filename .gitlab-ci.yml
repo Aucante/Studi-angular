@@ -1,6 +1,7 @@
 stages:
   - test
-
+  - deploy
+  
 test:
   stage: test
   image: zenika/alpine-chrome:100-with-node-16
@@ -9,7 +10,14 @@ test:
     - npm install @angular/cli 
     - node ${PWD}/node_modules/@angular/cli/bin/ng.js analytics disable
     - node ${PWD}/node_modules/@angular/cli/bin/ng.js test --browsers=ChromeHeadless --watch=false
-    
-  
 
-
+deploy:
+  stage: deploy
+  image: alpine
+  script:
+    - apk add aws-cli curl make
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x kubectl
+    - make update-kube-config
+    - ./kubectl apply -f k8s/deployment.yaml
+    - ./kubectl rollout restart deploy/service-node
