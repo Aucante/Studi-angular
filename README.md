@@ -27,7 +27,7 @@
 
 #### Update Kubeconfig
 ```bash
-  update-kube-config
+  make update-kube-config
 ```
 
 The application is available on http://localhost:81.
